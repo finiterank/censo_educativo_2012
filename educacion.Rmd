@@ -1,4 +1,4 @@
-Números de Educación
+Censo educativo 2012
 ========================================================
 
 ```{r}
@@ -75,7 +75,7 @@ m3 <- m3 + scale_fill_gradient(name="Proporción de niños en\n prejardín y jar
                                                     guide="colourbar")
 m3
 
-ggsave("./cubrimiento_preescolar.png", m3, width=12, height=15)
+ggsave("./figures/cubrimiento_preescolar.png", m3, width=12, height=15)
 ```
 
 ```{r}
@@ -87,5 +87,5 @@ m4 <- m4 + scale_fill_gradient(name="Proporción de niños matriculados en coleg
                                                     space="Lab", na.value="grey50",
                                                     guide="colourbar")
 m4
-ggsave("./matriculaspublicas.png", m4, width=12, height=15)
+ggsave("./figures/matriculaspublicas.png", m4, width=12, height=15)
 ```
