@@ -1,0 +1,45 @@
+Números de Educación
+========================================================
+
+```{r}
+datos <- read.csv("data//Ministerio_de_educacion_nacional.datos2012appmovilepbmdepto - Depto.csv")
+colnames(datos)<- tolower(colnames(datos))
+datos = datos[-34,]
+```
+
+```{r}
+deptos <- readOGR(dsn="./depto/", layer="depto")
+levels(deptos@data$DPTO) <- as.numeric(levels(deptos@data$DPTO))
+deptos@data$id <- rownames(colmap@data)
+deptosdf <- fortify(colmap)
+deptosdf <- join(deptosdf, deptos@data, by="id")
+deptosdf <- merge(deptosdf, datos, by.x="DPTO", by.y="cod.dane.departamento", all.x=T, all.y=F)
+```
+
+```{r}
+poblacion <- read.csv("data/poblacion_por_departamento.csv")
+deptosdf <- merge(deptosdf, poblacion, by.x="DPTO", by.y="codigo", all.x=T, all.y=F)
+```
+
+
+```{r fig.width=12, fig.height=15}
+th <- theme(axis.text.x = element_blank(), 
+            axis.text.y = element_blank(), 
+            axis.ticks= element_blank(),
+            axis.title=element_blank(),
+            panel.grid.major=element_blank(), 
+            panel.grid.minor=element_blank(), 
+            plot.background=element_blank(), 
+             panel.background=element_blank()
+            )
+
+m <- ggplot(data=deptosdf, aes(x=long, y=lat, group=group)) + coord_equal() + th
+m <- m + geom_path(color="white", linestyle=2)
+m <- m + geom_polygon(aes(fill=matricula.prejardín.y.jardín/de.0.a.4))
+m <- m + scale_fill_gradient(name="Proporción de niños en\n prejardín y jardín\n sobre total de\n niños de 0 a 4 años\n en departamento",
+                                                   low="#ffffcc", high="#ff4444", 
+                                                    space="Lab", na.value="grey50",
+                                                    guide="colourbar")
+m
+```
+
