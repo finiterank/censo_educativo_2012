@@ -42,9 +42,9 @@ th <- theme(axis.text.x = element_blank(),
              panel.background=element_blank()
             )
 
-m1 <- ggplot(data=deptosdf, aes(x=long, y=lat, group=group)) + coord_equal() + th
-m1 <- m1 + geom_path(color="white")
-m1 <- m1 + geom_polygon(aes(fill=(matricula.transición + matricula.primaria)/(de.5.a.9+de.10.a.14)))
+m <- ggplot(data=deptosdf, aes(x=long, y=lat, group=group)) + coord_equal() + th
+m <- m + geom_path(color="white")
+m1 <- m + geom_polygon(aes(fill=(matricula.transición + matricula.primaria)/(de.5.a.9+de.10.a.14)))
 m1 <- m1 + scale_fill_gradient(name="Proporción de niños en\n transición y primaria sobre total de\n niños de 5 a 15 años en el departamento",
                                                    low="#ffffcc", high="#ff4444", 
                                                     space="Lab", na.value="grey50",
@@ -52,9 +52,7 @@ m1 <- m1 + scale_fill_gradient(name="Proporción de niños en\n transición y pr
 ```
 
 ```{r}
-m2 <- ggplot(data=deptosdf, aes(x=long, y=lat, group=group)) + coord_equal() + th
-m2 <- m2 + geom_path(color="white")
-m2 <- m2 + geom_polygon(aes(fill=(matricula.media + matricula.secundaria)/(de.10.a.14 + de.15.a.19)))
+m2 <- m + geom_polygon(aes(fill=(matricula.media + matricula.secundaria)/(de.10.a.14 + de.15.a.19)))
 m2 <- m2 + scale_fill_gradient(name="Proporción de niños en\n bachillerato sobre total de\n niños de 10 a 20 años en el departamento",
                                                    low="#ffffcc", high="#ff4444", 
                                                     space="Lab", na.value="grey50",
@@ -66,9 +64,7 @@ grid.arrange(arrangeGrob(m1,m2, nrow=2))
 ```
 
 ```{r}
-m3 <- ggplot(data=deptosdf, aes(x=long, y=lat, group=group)) + coord_equal() + th
-m3 <- m3 + geom_path(color="white")
-m3 <- m3 + geom_polygon(aes(fill=matricula.prejardín.y.jardín/de.0.a.4))
+m3 <- m + geom_polygon(aes(fill=matricula.prejardín.y.jardín/de.0.a.4))
 m3 <- m3 + scale_fill_gradient(name="Proporción de niños en\n prejardín y jardín sobre total de\n niños de 0 a 5 años en el departamento",
                                                    low="#ffffcc", high="#ff4444", 
                                                     space="Lab", na.value="grey50",
@@ -79,9 +75,7 @@ ggsave("./figures/cubrimiento_preescolar.png", m3, width=12, height=15)
 ```
 
 ```{r}
-m4 <- ggplot(data=deptosdf, aes(x=long, y=lat, group=group)) + coord_equal() + th
-m4 <- m4 + geom_path(color="white")
-m4 <- m4 + geom_polygon(aes(fill=matricula.oficial/matricula.total))
+m4 <- m + geom_polygon(aes(fill=matricula.oficial/matricula.total))
 m4 <- m4 + scale_fill_gradient(name="Proporción de niños matriculados en colegios públicos\n sobre total de niños matriculados en colegios\n en el departamento",
                                                    low="#ffffcc", high="#669900", 
                                                     space="Lab", na.value="grey50",
@@ -91,9 +85,7 @@ ggsave("./figures/matriculaspublicas.png", m4, width=12, height=15)
 ```
 
 ```{r}
-m5 <- ggplot(data=deptosdf, aes(x=long, y=lat, group=group)) + coord_equal() + th
-m5 <- m5 + geom_path(color="white")
-m5 <- m5 + geom_polygon(aes(fill=(saber.11.desempeño..muy.inferior + saber.11.desempeño.inferior)*100))
+m5 <- m + geom_polygon(aes(fill=(saber.11.desempeño..muy.inferior + saber.11.desempeño.inferior)*100))
 m5 <- m5 + scale_fill_gradient(name="Porcentaje de niños evaluados en Saber 11\n con resultados clasificados como inferior o muy inferior",
                                                    low="#ffffcc", high="#ff6600", 
                                                     space="Lab", na.value="grey50",
